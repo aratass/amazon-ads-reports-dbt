@@ -1,0 +1,23 @@
+{
+ "configuration": {
+  "adProduct": "SPONSORED_PRODUCTS",
+  "columns": ["date", "campaignId", "campaignName", "campaignStatus", "campaignBudgetAmount", "impressions", "clicks", "cost", "purchases7d", "sales7d", "unitsSoldClicks7d", "purchases14d", "sales14d"],
+  "filters": null,
+  "format": "GZIP_JSON",
+  "groupBy": ["campaign"],
+  "reportTypeId": "spCampaigns",
+  "timeUnit": "DAILY"
+ },
+ "createdAt": "2026-09-15T06:00:01.223Z",
+ "endDate": "2026-09-14",
+ "failureReason": null,
+ "fileSize": null,
+ "generatedAt": null,
+ "name": "sp_campaign_daily 2026-09-01 to 2026-09-14",
+ "reportId": "06ba6494-8568-4066-949f-abb6a91c0b9c",
+ "startDate": "2026-09-01",
+ "status": "PENDING",
+ "updatedAt": "2026-09-15T06:00:01.223Z",
+ "url": null,
+ "urlExpiresAt": null
+}

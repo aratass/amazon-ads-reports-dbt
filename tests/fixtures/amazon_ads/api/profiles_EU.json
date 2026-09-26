@@ -1,0 +1,15 @@
+[
+ {
+  "profileId": 3000000000000002,
+  "countryCode": "UK",
+  "currencyCode": "GBP",
+  "dailyBudget": 999999999.0,
+  "timezone": "Europe/London",
+  "accountInfo": {
+   "marketplaceStringId": "A1F83G8C2ARO7P",
+   "id": "A1DEMOSELLERUK",
+   "type": "seller",
+   "name": ""
+  }
+ }
+]

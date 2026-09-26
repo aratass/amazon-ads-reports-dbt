@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: amazon_ads
+    description: Raw tables written by the amazon-ads-pipeline extractor.
+    schema: "{{ var('amazon_ads_raw_schema') }}"
+    config:
+      loaded_at_field: _loaded_at
+      # The extractor runs daily; warn after one missed run, fail after two.
+      freshness:
+        warn_after: {count: 26, period: hour}
+        error_after: {count: 50, period: hour}
+
+    tables:
+      - name: profiles
+        description: GET /v2/profiles, one row per profile per run.
+        columns:
+          - name: profile_id
+            data_tests: [not_null]
+
+      - name: sp_campaign_daily
+        description: spCampaigns report, groupBy campaign, DAILY.
+        columns:
+          - name: campaign_id
+            data_tests: [not_null]
+          - name: date
+            data_tests: [not_null]
+
+      - name: sp_advertised_product_daily
+        description: spAdvertisedProduct report, groupBy advertiser, DAILY.
+        columns:
+          - name: ad_id
+            data_tests: [not_null]
+          - name: date
+            data_tests: [not_null]

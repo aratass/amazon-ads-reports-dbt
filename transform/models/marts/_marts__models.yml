@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: fct_sp_campaign_performance_daily
+    description: >
+      Sponsored Products campaign performance per day, with the profile's marketplace and
+      currency. Attribution is 7 days (sellers) with 14-day columns for vendors.
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [profile_id, campaign_id, date_day]
+    columns:
+      - name: date_day
+        description: Report date in the profile's time zone.
+        data_tests: [not_null]
+      - name: profile_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_amazon_ads__profiles')
+                field: profile_id
+      - name: campaign_id
+        data_tests: [not_null]
+      - name: currency_code
+        data_tests: [not_null]
+      - name: campaign_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [ENABLED, PAUSED, ARCHIVED]
+      - name: cost
+        data_tests: [not_null]
+      - name: acos_7d
+        description: Advertising cost of sales, cost / sales_7d. Null without sales.
+      - name: roas_7d
+        description: sales_7d / cost. Null without spend.
+      - name: budget_utilization
+        description: cost / campaign_budget_amount (the daily budget).
+
+  - name: fct_sp_product_performance_daily
+    description: Advertised ASIN performance per day, summed over campaigns and ad groups.
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [profile_id, advertised_asin, date_day]
+    columns:
+      - name: advertised_asin
+        data_tests: [not_null]
+      - name: date_day
+        data_tests: [not_null]
+      - name: currency_code
+        data_tests: [not_null]
+      - name: cost
+        data_tests: [not_null]
+
+unit_tests:
+  - name: ratios_are_null_without_a_denominator
+    description: >
+      A day with clicks but no sales has no ACOS (not zero, not an error), a day without
+      spend has no ROAS, and currency comes from the profile.
+    model: fct_sp_campaign_performance_daily
+    given:
+      - input: ref('stg_amazon_ads__sp_campaign_daily')
+        rows:
+          - {profile_id: 1, campaign_id: 10, date_day: 2026-09-01, impressions: 1000, clicks: 20, cost: 15.00, purchases_7d: 2, sales_7d: 60.00, campaign_budget_amount: 30.00}
+          - {profile_id: 1, campaign_id: 10, date_day: 2026-09-02, impressions: 500, clicks: 4, cost: 3.00, purchases_7d: 0, sales_7d: 0, campaign_budget_amount: 30.00}
+          - {profile_id: 1, campaign_id: 10, date_day: 2026-09-03, impressions: 0, clicks: 0, cost: 0, purchases_7d: 0, sales_7d: 0, campaign_budget_amount: 30.00}
+      - input: ref('stg_amazon_ads__profiles')
+        rows:
+          - {profile_id: 1, currency_code: USD}
+    expect:
+      rows:
+        - {date_day: 2026-09-01, currency_code: USD, ctr: 0.02, cpc: 0.75, acos_7d: 0.25, roas_7d: 4.0, budget_utilization: 0.5}
+        - {date_day: 2026-09-02, currency_code: USD, ctr: 0.008, cpc: 0.75, acos_7d: null, roas_7d: 0.0, budget_utilization: 0.1}
+        - {date_day: 2026-09-03, currency_code: USD, ctr: null, cpc: null, acos_7d: null, roas_7d: null, budget_utilization: 0.0}

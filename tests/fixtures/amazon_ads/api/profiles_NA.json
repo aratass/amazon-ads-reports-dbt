@@ -1,0 +1,27 @@
+[
+ {
+  "profileId": 3000000000000001,
+  "countryCode": "US",
+  "currencyCode": "USD",
+  "dailyBudget": 999999999.0,
+  "timezone": "America/Los_Angeles",
+  "accountInfo": {
+   "marketplaceStringId": "ATVPDKIKX0DER",
+   "id": "A1DEMOSELLERUS",
+   "type": "seller",
+   "name": ""
+  }
+ },
+ {
+  "profileId": 3000000000000009,
+  "countryCode": "US",
+  "currencyCode": "USD",
+  "timezone": "America/Los_Angeles",
+  "accountInfo": {
+   "marketplaceStringId": "ATVPDKIKX0DER",
+   "id": "ENTITYDEMOAGENCY",
+   "type": "agency",
+   "name": "Demo Agency (DSP)"
+  }
+ }
+]

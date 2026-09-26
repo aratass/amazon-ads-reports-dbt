@@ -1,0 +1,23 @@
+# Both targets read their settings from environment variables; nothing secret lives here.
+amazon_ads_reporting:
+  target: "{{ env_var('DBT_TARGET', 'local') }}"
+  outputs:
+    # Local and CI runs: a DuckDB file filled by `amazon-ads-pipeline --warehouse duckdb`.
+    local:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_PATH', 'local.duckdb') }}"
+      schema: main
+      threads: 4
+
+    # Production. method: oauth uses Application Default Credentials: the service account
+    # the job runs as, or `gcloud auth application-default login` on a laptop.
+    prod:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('BQ_PROJECT', 'set-BQ_PROJECT') }}"
+      dataset: "{{ env_var('BQ_DATASET', 'amazon_ads') }}"
+      location: "{{ env_var('BQ_LOCATION', 'EU') }}"
+      threads: 8
+      job_execution_timeout_seconds: 900
+      job_retries: 2
+      priority: interactive

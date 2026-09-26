@@ -1,0 +1,39 @@
+{
+ "configuration": {
+  "adProduct": "SPONSORED_PRODUCTS",
+  "columns": [
+   "date",
+   "campaignId",
+   "campaignName",
+   "campaignStatus",
+   "campaignBudgetAmount",
+   "impressions",
+   "clicks",
+   "cost",
+   "purchases7d",
+   "sales7d",
+   "unitsSoldClicks7d",
+   "purchases14d",
+   "sales14d"
+  ],
+  "filters": null,
+  "format": "GZIP_JSON",
+  "groupBy": [
+   "campaign"
+  ],
+  "reportTypeId": "spCampaigns",
+  "timeUnit": "DAILY"
+ },
+ "createdAt": "2026-09-15T06:00:01.223Z",
+ "endDate": "2026-09-14",
+ "failureReason": null,
+ "fileSize": 1043,
+ "generatedAt": "2026-09-15T06:02:45.758Z",
+ "name": "sp_campaign_daily 2026-09-01 to 2026-09-14",
+ "reportId": "06ba6494-8568-4066-949f-abb6a91c0b9c",
+ "startDate": "2026-09-01",
+ "status": "COMPLETED",
+ "updatedAt": "2026-09-15T06:02:45.758Z",
+ "url": "https://offline-report-storage-us-east-1-prod.s3.amazonaws.com/06ba6494-8568-4066-949f-abb6a91c0b9c-1789452165347/report-06ba6494-8568-4066-949f-abb6a91c0b9c-1789452165347.json.gz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260915T060245Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3599&X-Amz-Signature=0000example",
+ "urlExpiresAt": "2026-09-15T07:02:45.388887Z"
+}

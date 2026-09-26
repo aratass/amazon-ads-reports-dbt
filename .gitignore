@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv-prod/
+.pytest_cache/
+.ruff_cache/
+
+# Local data and credentials: never commit these
+.env
+*.duckdb
+*.duckdb.wal
+recordings/
+
+# dbt
+transform/target/
+transform/logs/
+transform/dbt_packages/
+transform/.user.yml

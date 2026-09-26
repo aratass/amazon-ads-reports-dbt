@@ -1,0 +1,27 @@
+name: amazon_ads_reporting
+version: "1.0.0"
+config-version: 2
+profile: amazon_ads_reporting
+
+model-paths: ["models"]
+test-paths: ["tests"]
+clean-targets: ["target", "logs"]
+
+flags:
+  send_anonymous_usage_stats: false
+
+vars:
+  # Dataset (BigQuery) or schema (DuckDB) the extractor loads into.
+  amazon_ads_raw_schema: amazon_ads_raw
+  # Campaign spend may differ from the sum of its advertised products by this share
+  # (with a floor of one cent for rounding) on any campaign-day.
+  spend_reconciliation_tolerance: 0.005
+
+models:
+  amazon_ads_reporting:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
